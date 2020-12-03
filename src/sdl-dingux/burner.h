@@ -91,6 +91,16 @@ char* DecorateGameName(UINT32 nBurnDrv);
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);
 
+//cjs
+// conc.cpp
+INT32 ConfigCheatLoad();
+//config.cpp
+#define QUOTE_MAX (128)
+TCHAR* LabelCheck(TCHAR* s, TCHAR* pszLabel);
+INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc);
+
+
+
 // state.cpp
 INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)());
 INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)());
@@ -129,6 +139,8 @@ extern char szAppSamplesPath[MAX_PATH]; // for burn/snd/samples.cpp
 extern char szAppPreviewPath[MAX_PATH];
 extern char szAppRomPaths[DIRS_MAX][MAX_PATH];
 extern char szAppBlendPath[MAX_PATH];
+//cjs:paths.cpp
+extern char szAppCheatsPath[MAX_PATH];
 
 void BurnPathsInit();
 

@@ -24,7 +24,7 @@
 #include <SDL/SDL_image.h>
 #include <vector>
 #include <fstream>
-#include <avir.h>
+#include <avir/avir.h>
 #include <png++/png.hpp>
 
 #include "version.h"
@@ -34,6 +34,8 @@
 #include "sdl_video.h"
 #include "sdl_input.h"
 #include "gui_gfx.h"
+//cjs
+#include "cjs_sdl.h"
 
 #ifdef FBA_DEBUG
 #include "m68000_intf.h"
@@ -222,6 +224,8 @@ static void gui_AutofireMenuRun();
 static void gui_help();
 static void gui_reset();
 static void gui_SavePreview();
+//cjs
+static void gui_cheat();
 
 /* data definitions */
 #ifdef GCW0_BTN_LAYOUT
@@ -247,10 +251,11 @@ MENUITEM gui_MainMenuItems[] = {
 	{(char *)"Help", NULL, 0, NULL, &gui_help},
 	{(char *)"Reset", NULL, 0, NULL, &gui_reset},
 	{(char *)"Exit", NULL, 0, NULL, &call_exit},
+	{(char *)"Cheat", NULL, 0, NULL, &gui_cheat},//cjs
 	{NULL, NULL, 0, NULL, NULL}
 };
 
-MENU gui_MainMenu = { 9, 0, (MENUITEM *)&gui_MainMenuItems };
+MENU gui_MainMenu = { 10, 0, (MENUITEM *)&gui_MainMenuItems };//cjs 9->10
 
 MENUITEM gui_KeyMenuItems[] = {
 	{(char *)"Fire 1   - ", &gui_KeyData[0], 5, (char **)&gui_KeyNames, NULL},
@@ -563,6 +568,8 @@ static void gui_reset()
 void gui_Init()
 {
 	menuSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, 320, 240, 16, 0, 0, 0, 0);
+	//cjs
+	InitFont();
 }
 
 void gui_Run()
@@ -615,6 +622,8 @@ void gui_Exit()
 	menuSurface = NULL;
 	last_stpv = NULL;
 	inGameScreen = NULL;
+	//cjs
+	KillFont();
 }
 
 #ifdef FBA_DEBUG
@@ -801,6 +810,11 @@ void gui_RunDebug()
 	//f = fopen("./1.log", "w");
 }
 #endif
+//cjs
+void gui_cheat()
+{
+	sdl_cheats();
+}
 
 //
 // Font: THIN8X8.pf

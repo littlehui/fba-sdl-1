@@ -16,6 +16,8 @@ char szAppRomPaths[DIRS_MAX][MAX_PATH] = {{"./"}, {"/usr/local/share/roms/"}, {"
 char szAppBlendPath[MAX_PATH] = "./.fba/blend"; 	// for cps_obj.cpp, neo_sprite.cpp, pgm_draw.cpp
 char szAppHDDPath[MAX_PATH] = "./.fba/hdd/";
 char szAppEEPROMPath[MAX_PATH] = "./.fba/games/";
+//cjs for conc.cpp
+char szAppCheatsPath[MAX_PATH] = "./.fba/cheats/";
 
 void BurnPathsInit()
 {
@@ -72,5 +74,8 @@ void BurnPathsInit()
 
 	sprintf(szAppEEPROMPath, "%s/games/", szAppHomePath);
 	mkdir(szAppEEPROMPath, 0777);
+	//cjs
+	sprintf(szAppCheatsPath, "%s/cheats/", szAppHomePath);
+	mkdir(szAppCheatsPath, 0777);
 #endif
 }

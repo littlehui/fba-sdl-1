@@ -32,7 +32,44 @@ TCHAR* LabelCheck(TCHAR* s, TCHAR* pszLabel)
 	}
 	return s + nLen;
 }
+//cjs
+INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc)	// Read a (quoted) string from szSrc and poINT32 to the end
+{
+	static TCHAR szQuote[QUOTE_MAX];
+	TCHAR* s = pszSrc;
+	TCHAR* e;
 
+	// Skip whitespace
+	SKIP_WS(s);
+
+	e = s;
+
+	if (*s == _T('\"')) {										// Quoted string
+		s++;
+		e++;
+		// Find end quote
+		FIND_QT(e);
+		_tcsncpy(szQuote, s, e - s);
+		// Zero-terminate
+		szQuote[e - s] = _T('\0');
+		e++;
+	} else {													// Non-quoted string
+		// Find whitespace
+		FIND_WS(e);
+		_tcsncpy(szQuote, s, e - s);
+		// Zero-terminate
+		szQuote[e - s] = _T('\0');
+	}
+
+	if (ppszQuote) {
+		*ppszQuote = szQuote;
+	}
+	if (ppszEnd)	{
+		*ppszEnd = e;
+	}
+
+	return 0;
+}
 // Read in the config file for the whole application
 int ConfigAppLoad()
 {
