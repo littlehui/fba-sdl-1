@@ -170,6 +170,9 @@ void DrawText3(const char *textmsg, int x, int y)
 	SDL_Surface *message=NULL;
 	message=TTF_RenderUTF8_Blended(sdl_ttf_font,textmsg, textColor );//加在成中文
 	//message=TTF_RenderUTF8_Solid(sdl_ttf_font,textmsg, textColor );//加在成中文
+	//message=TTF_RenderText_Blended(sdl_ttf_font,textmsg, textColor );//加在成中文TTF_RenderText_Blended
+	//
+	
 	SDL_Rect dect;
 	dect.x=x;
 	dect.y=y;
