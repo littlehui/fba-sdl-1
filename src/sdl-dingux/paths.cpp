@@ -52,6 +52,9 @@ void BurnPathsInit()
 
 	sprintf(szAppSamplesPath, "%s/samples", szAppHomePath);
 	mkdir(szAppSamplesPath, 0777);
+	//cjs
+	sprintf(szAppCheatsPath, "%s/cheats/", szAppHomePath);
+	mkdir(szAppCheatsPath, 0777);
 #else
 	getcwd(szAppHomePath, MAX_PATH);
 	strcat(szAppHomePath, "/.fba");

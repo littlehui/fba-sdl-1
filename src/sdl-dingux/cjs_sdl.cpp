@@ -116,8 +116,7 @@ int ec_Settings()
 	char ecname[1024];
 
 
-	CheatInfo* pCurrentCheat = pCheatInfo;
-	CheatAddressInfo* pAddressInfo;
+	CheatInfo* pCurrentCheat;
 
 
 	if(cheat_menu_yes == 0)
@@ -143,8 +142,9 @@ int ec_Settings()
 
 
 	//先显示菜单，再更新菜单
+	char cheat_msg[] = "金手指菜单";
 	draw_bg(g_bg);
-	DrawText3("金手指菜单", 0, 14);
+	DrawText3(cheat_msg, 0, 14);
 	drawrect(255, 0, 0,  0,start_now,320,start_w);
 
 	if (all_ec_nums > -1)
@@ -154,21 +154,13 @@ int ec_Settings()
 		y = 40;
 		pCurrentCheat = pCheatInfo;
 		while (pCurrentCheat && i < offset_end) {
-			if (strlen(pCurrentCheat->szCheatName)>0 ) {
-				if(i>=offset_start){
-					DrawText3(pCurrentCheat->szCheatName, 30, y);
-					cheat_index=pCurrentCheat->nCurrent;
-					if(pCurrentCheat->pOption[cheat_index]->szOptionName){
-						DrawText3(pCurrentCheat->pOption[cheat_index]->szOptionName, 210, y);
-						y += 15;
-						if(i==index){
-							pCheat_index=pCurrentCheat;
-						}
-					}
-					else{
-						pCurrentCheat = pCurrentCheat->pNext;
-						continue;
-					}
+			if(i>=offset_start){
+				DrawText3(pCurrentCheat->szCheatName, 30, y);
+				cheat_index=pCurrentCheat->nCurrent;
+				DrawText3(pCurrentCheat->pOption[cheat_index]->szOptionName, 210, y);
+				y += 15;
+				if(i==index){
+					pCheat_index=pCurrentCheat;
 				}
 			}
 			i++;
@@ -247,7 +239,7 @@ int ec_Settings()
 			汉字处理
 			***/
 			draw_bg(g_bg);
-			DrawText3("金手指菜单", 0, 14);
+			DrawText3(cheat_msg, 0, 14);
 			drawrect(255, 0, 0,  0,start_now,320,start_w);
 
 
@@ -258,28 +250,18 @@ int ec_Settings()
 			y = 40;
 			pCurrentCheat = pCheatInfo;
 			while (pCurrentCheat && i < offset_end) {
-				if (strlen(pCurrentCheat->szCheatName)>0 ) {
-					if(i>=offset_start){
-						DrawText3(pCurrentCheat->szCheatName, 30, y);
-						cheat_index=pCurrentCheat->nCurrent;
-						if(pCurrentCheat->pOption[cheat_index]->szOptionName){
-							DrawText3(pCurrentCheat->pOption[cheat_index]->szOptionName, 210, y);
-							y += 15;
-							if(i==index){
-								pCheat_index=pCurrentCheat;
-							}
-						}
-						else{
-							pCurrentCheat = pCurrentCheat->pNext;
-							continue;
-						}
+				if(i>=offset_start){
+					DrawText3(pCurrentCheat->szCheatName, 30, y);
+					cheat_index=pCurrentCheat->nCurrent;
+					DrawText3(pCurrentCheat->pOption[cheat_index]->szOptionName, 210, y);
+					y += 15;
+					if(i==index){
+						pCheat_index=pCurrentCheat;
 					}
 				}
 				i++;
 				pCurrentCheat = pCurrentCheat->pNext;
 			}
-			// Draw offset marks
-
 			// Update real screen
 			SDL_Delay(16);
 			SFC_Flip();
