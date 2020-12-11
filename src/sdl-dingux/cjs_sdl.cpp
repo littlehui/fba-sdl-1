@@ -150,8 +150,9 @@ int ec_Settings()
 
 
 	//先显示菜单，再更新菜单
+	char cheat_msg[] = "金手指菜单";
 	draw_bg(g_bg);
-	DrawText3("金手指菜单", 0, 14);
+	DrawText3(cheat_msg, 0, 14);
 	drawrect(255, 0, 0,  0,start_now,320,start_w);
 
 	if (all_ec_nums > -1)
@@ -246,7 +247,7 @@ int ec_Settings()
 			汉字处理
 			***/
 			draw_bg(g_bg);
-			DrawText3("金手指菜单", 0, 14);
+			DrawText3(cheat_msg, 0, 14);
 			drawrect(255, 0, 0,  0,start_now,320,start_w);
 
 
