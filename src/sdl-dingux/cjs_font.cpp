@@ -28,7 +28,7 @@ int InitFont()
 {
 	// Load picture
 	if ( g_bg == NULL ){
-		g_bg = SDL_LoadBMP("backdrop.bmp");
+		g_bg = SDL_LoadBMP("skin/backup.bmp");
 	}
 	//SDL_ttf
 	//预处理
@@ -45,9 +45,11 @@ int InitFont()
 void KillFont()
 {
 	SDL_FreeSurface(g_bg);
+	g_bg = NULL;
 	//SDL_ttf
-	TTF_CloseFont( sdl_ttf_font );
-	TTF_Quit();
+	TTF_CloseFont( sdl_ttf_font ); //不关闭字体
+	sdl_ttf_font = NULL;
+	TTF_Quit();                    //不退出TTF
 	//SDL_Quit();
 
 }
@@ -170,9 +172,6 @@ void DrawText3(const char *textmsg, int x, int y)
 	SDL_Surface *message=NULL;
 	message=TTF_RenderUTF8_Blended(sdl_ttf_font,textmsg, textColor );//加在成中文
 	//message=TTF_RenderUTF8_Solid(sdl_ttf_font,textmsg, textColor );//加在成中文
-	//message=TTF_RenderText_Blended(sdl_ttf_font,textmsg, textColor );//加在成中文TTF_RenderText_Blended
-	//
-	
 	SDL_Rect dect;
 	dect.x=x;
 	dect.y=y;

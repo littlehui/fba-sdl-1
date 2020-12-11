@@ -116,25 +116,33 @@ int ec_Settings()
 	char ecname[1024];
 
 
-	CheatInfo* pCurrentCheat;
 
+	int start_y = 40; //开始高度
+	int start_w = 15; //间距
+	static int index = 0;
+	static int offset_start = 0;
+	static int start_now = index*start_w+start_y;
+	
 
 	if(cheat_menu_yes == 0)
 	{
 		//str_log("start");
 		cheat_menu_yes=1;
+		index = 0;
+		offset_start = 0;
+		start_now = index*start_w+start_y;
 		all_ec_nums = get_ec_infos();
 		
 	}
+	
+	CheatInfo* pCurrentCheat = pCheatInfo;
+	CheatAddressInfo* pAddressInfo;
 
-	int start_y = 40; //开始高度
-	int start_w = 15; //间距
-	static int index = 0;
-	static int start_now = index*start_w+start_y;
+	
 	int done = 0, y, i;
-	int max_entries = 9;
+	int max_entries = 12;
 	int menu_size = all_ec_nums+1;
-	static int offset_start = 0;
+	
 	static int offset_end = menu_size > max_entries ? max_entries : menu_size;
 
 	char tmp[32];
@@ -142,9 +150,8 @@ int ec_Settings()
 
 
 	//先显示菜单，再更新菜单
-	char cheat_msg[] = "金手指菜单";
 	draw_bg(g_bg);
-	DrawText3(cheat_msg, 0, 14);
+	DrawText3("金手指菜单", 0, 14);
 	drawrect(255, 0, 0,  0,start_now,320,start_w);
 
 	if (all_ec_nums > -1)
@@ -239,7 +246,7 @@ int ec_Settings()
 			汉字处理
 			***/
 			draw_bg(g_bg);
-			DrawText3(cheat_msg, 0, 14);
+			DrawText3("金手指菜单", 0, 14);
 			drawrect(255, 0, 0,  0,start_now,320,start_w);
 
 
@@ -262,6 +269,8 @@ int ec_Settings()
 				i++;
 				pCurrentCheat = pCurrentCheat->pNext;
 			}
+			// Draw offset marks
+
 			// Update real screen
 			SDL_Delay(16);
 			SFC_Flip();
@@ -301,4 +310,10 @@ void sdl_cheats()
 	//SDL_TEST();
 	ec_Settings();
 	
+}
+void cheats_exit()
+{
+	CheatExit();
+	cheat_menu_yes = 0;
+
 }

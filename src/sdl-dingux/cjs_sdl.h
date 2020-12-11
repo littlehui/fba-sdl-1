@@ -19,6 +19,7 @@ void chj_update(unsigned long key, int ec_index);
 //菜单函数
 //int ec_Settings();
 void sdl_cheats();
+void cheats_exit();
 
 
 

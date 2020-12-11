@@ -624,6 +624,7 @@ void gui_Exit()
 	inGameScreen = NULL;
 	//cjs
 	KillFont();
+	cheats_exit();
 }
 
 #ifdef FBA_DEBUG
