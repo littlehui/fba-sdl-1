@@ -35,6 +35,7 @@ typedef struct config
 extern CONFIG cfg;
 
 void gui_load_cfg();
+void load_rom_sort();
 void gui_write_cfg();
 
 #endif // _GUI_CONFIG_H_

@@ -246,8 +246,41 @@ static void save_romsdir_string(const std::string & str)
 	t << str;
 }
 
+void load_game_sort_num_all() {
+    int i = 0;
+    int j = 0;
+    if (romsortlist.loaded) {
+        fprintf(stderr, "load_game_sort_num  romlist.nb_rom %d\n", romlist.nb_rom);
+        for (j; j < romlist.nb_list[0]; j++) {
+            for (i = 0; i < romsortlist.nb_all_rom; i++) {
+                if (strcmp(romlist.zip[j], romsortlist.name[i]) == 0) {
+                    romlist.sort[j] = romsortlist.sort[i];
+                    fprintf(stderr, "load_game_sort_num find gamename %s  sort %d\n", romlist.zip[j], romlist.sort[j] );
+                    break;
+                }
+            }
+        }
+    }
+}
+
+int load_game_sort_num(char* gamename) {
+    int i = 0;
+    if (romsortlist.loaded) {
+        for (i; i < sizeof(romsortlist.name)/ sizeof(char *); i++) {
+            //fprintf(stderr, "load_game_sort_num gamename %s romsortlist.name[i] %s\n", gamename, romsortlist.name[i]);
+            if (strcmp(gamename, romsortlist.name[i]) == 0) {
+                fprintf(stderr, "load_game_sort_num find gamename %s  sort %d\n", gamename, romsortlist.sort[i]);
+                //write to cachefile littlehui todo
+                return romsortlist.sort[i];
+            }
+        }
+    }
+    return i;
+}
+
 void gui_sort_romlist()
 {
+
 options.create_lists = 0;
 
 	bool use_last_romlist = false;
@@ -278,13 +311,18 @@ options.create_lists = 0;
 	romlist.nb_list[0] = 0;
 	romlist.long_max = 0;
 	romlist.nb_rom = 0;
-
+	//5807
+    //fprintf(stderr, "gnBurnDrvCount %d\n", nBurnDrvCount);
 	for(int i = 0; i < nBurnDrvCount; i++) {
 		// save it!
 		nBurnDrvActive /*= nBurnDrvSelect[0]*/ = i;
 
 		romlist.zip[i] = BurnDrvGetTextA(DRV_NAME);
-		if(!(romlist.parent[i] = BurnDrvGetTextA(DRV_PARENT)))
+        //load sort num littlehui todo
+        //romlist.sort[i] = load_game_sort_num(romlist.zip[i]);
+        //fprintf(stderr, "gui_sort_romlist  romlist.sort[i] sort %d\n", romlist.sort[i]);
+
+        if(!(romlist.parent[i] = BurnDrvGetTextA(DRV_PARENT)))
 			romlist.parent[i] = "fba";
 		romlist.name[i] = BurnDrvGetTextA(DRV_FULLNAME);
 		romlist.year[i] = BurnDrvGetTextA(DRV_DATE);
@@ -318,16 +356,25 @@ options.create_lists = 0;
 		unfiltered_romsort[0][i] = i;
 	}
 
+
 	if(options.create_lists || !use_last_romlist)
 		save_last_romlist(romset);
 
 	romlist.nb_list[0] = nBurnDrvCount;
-
-	std::sort(unfiltered_romsort[0], unfiltered_romsort[0] + romlist.nb_list[0], 
+    //littlehui modify
+    //load_game_sort_num_all();
+    romsortlist.loaded = false;
+	if (romsortlist.loaded) {
+        std::sort(unfiltered_romsort[0], unfiltered_romsort[0] + romlist.nb_list[0],
+              [](unsigned int v1, unsigned int v2) {
+                  return (romlist.sort[v1] - romlist.sort[v2]) <= 0;
+              });
+	} else {
+	    std::sort(unfiltered_romsort[0], unfiltered_romsort[0] + romlist.nb_list[0],
 		[](unsigned int v1, unsigned int v2) {
-			return (strcmp(romlist.name[v1], romlist.name[v2]) <= 0);
-		});
-
+            return (strcmp(romlist.name[v1], romlist.name[v2]) <= 0);
+        });
+    }
 	romlist.nb_list[1] = 0;
 	romlist.nb_list[2] = 0;
 	romlist.nb_list[3] = 0;

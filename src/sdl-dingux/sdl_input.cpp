@@ -202,6 +202,8 @@ void sdl_input_read(bool process_autofire) // called from do_keypad()
 	}
 }
 
+extern void save_state_preview(bool,bool);
+
 void do_keypad()
 {
 	int bVert = !options.rotate && (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL);
@@ -296,13 +298,34 @@ void do_keypad()
 			bRunPause = 0;
 		}
 	}
+	if ((keypc & BUTTON_START) && (keypc & BUTTON_SELECT)) {
+	    // exit
+        //extern int done; GameLooping = false; done = 1;
+        GameLooping = false;
+        keypc = keypad = 0;
+    }
+	if (keypc & BUTTON_L3) {
+        if (!bRunPause) {
+            //quick save
+            StatedSave(nSavestateSlot);
+            save_state_preview(true,false);
+            bRunPause = 0;
+        }
+	}
+	if (keypc & BUTTON_R3) {
+        if (!bRunPause) {
+            //quick load
+            GameLooping = true;
+            StatedLoad(nSavestateSlot);
+            bRunPause = 0;
+        }
+	}
 	if ((keypc & BUTTON_SL) && (keypc & BUTTON_SR)) {
 		if (keypc & BUTTON_Y) {
 			ChangeFrameskip();
 			keypc &= ~BUTTON_Y;
 		} else if (keypc & BUTTON_B && !bRunPause) {
 			StatedSave(nSavestateSlot);
-			extern void save_state_preview(bool,bool);
 			save_state_preview(true,false);
 			keypc &= ~BUTTON_B;
 		} else if (keypc & BUTTON_A && !bRunPause) {
@@ -316,7 +339,7 @@ void do_keypad()
 			SndPause(0);
 		} else if (keypc & BUTTON_SELECT) DiagRequest = 1;
 	}
-	else if ((keypc & BUTTON_START) && (keypc & BUTTON_SELECT)) P1P2Start = 1;
+	//else if ((keypc & BUTTON_START) && (keypc & BUTTON_SELECT)) P1P2Start = 1; //disable
 	else if (keypc & BUTTON_L2) ServiceRequest = 1;
 	else if (keypc & BUTTON_R2) TestRequest = 1;
 }

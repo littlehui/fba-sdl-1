@@ -50,7 +50,17 @@ typedef struct
 	unsigned int genre[NB_MAX_GAMES];
 	unsigned int longueur[NB_MAX_GAMES];
 	unsigned int long_max;
+	unsigned int sort[NB_MAX_GAMES];//for sort sortAlias.txt
 } ROMLIST;
+typedef struct
+{
+    char *name[NB_MAX_GAMES];
+    unsigned int sort[NB_MAX_GAMES];//for sort sortAlias.txt
+    bool loaded;
+    unsigned int nb_all_rom;
+} ROMSORTLIST;
+
+extern ROMSORTLIST romsortlist;
 
 extern ROMLIST romlist;
 extern unsigned int unfiltered_nb_list[NB_FILTERS];

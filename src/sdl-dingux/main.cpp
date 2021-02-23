@@ -211,7 +211,7 @@ void parse_cmd(int argc, char *argv[], char *path)
 				if(!optarg) continue;
 				z2=0;
 				sscanf(optarg,"%d",&z2);
-				if ((z2>2) || (z2<0)) z2=0;
+				if ((z2>5) || (z2<0)) z2=0;
 				options.hwscaling = z2;
 				break;
 			case 'd':

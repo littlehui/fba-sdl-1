@@ -36,6 +36,36 @@
 CONFIG cfg;
 
 static char g_string[255];
+ROMSORTLIST romsortlist;
+void load_rom_sort() {
+    FILE *fp;
+    char filename[512];
+    char arg1[128];
+    char arg2[255];
+    signed long argd;
+    char ligne[256];
+
+    sprintf(filename, "%s/romsort.cfg", szAppHomePath);
+    int i = 0;
+    romsortlist.nb_all_rom = 0;
+    if((fp = fopen(filename, "r")) != NULL) {
+        while(fgets(ligne,sizeof(ligne),fp) != NULL) {
+            sscanf(ligne, "%s\t%d", &arg1, &argd);
+            sscanf(ligne, "%s\t%s", &arg1, &arg2);
+            if(strcmp(arg1, "#") != 0) {
+                //fprintf(stderr, "load_rom_sort strcpy(romsortlist.name[i], arg1) %s\n", arg1);
+                romsortlist.name[i] = (char *)malloc(sizeof(arg1));
+                strcpy(romsortlist.name[i], arg1);
+                romsortlist.sort[i] = argd;
+                i ++;
+                romsortlist.nb_all_rom ++;
+                romsortlist.loaded = true;
+            }
+        }
+        fprintf(stderr, "load_rom_sort rom num %d\n", romsortlist.nb_all_rom);
+        fclose(fp);
+    }
+}
 
 void gui_load_cfg()
 {

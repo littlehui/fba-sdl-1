@@ -101,7 +101,7 @@ static char *abreviation_cf[11][7]={
 	{"11025", "16000", "22050", "32000", "44100", "", ""},
 	{"No","Yes","","","","",""},
 	{"No","-90","-180","-270","","",""},
-	{"Off","Aspect","Fullscr","","","",""}
+	{"Off","Aspect","Fullscr","HwX2","Scanlin","Grid",""}
 };
 
 void load_lastsel();
@@ -1355,7 +1355,7 @@ void ss_prg_options(int first, int last)
 						case OPTION_GUI_DEF_RUN_HWSCALING:
 						case OPTION_GUI_DEF_VRUN_HWSCALING:
 							options.hwscaling++;
-							if(options.hwscaling > 2) options.hwscaling = 0;
+							if(options.hwscaling > 5) options.hwscaling = 0;
 							break;
 						case OPTION_GUI_DEF_RUN_VSYNC:
 						case OPTION_GUI_DEF_VRUN_VSYNC:
@@ -1714,7 +1714,7 @@ void ss_prog_run(void)
 							break;
 						case OPTION_FBA_HWSCALING:
 							options.hwscaling++;
-							if(options.hwscaling > 2) options.hwscaling = 0;
+							if(options.hwscaling > 5) options.hwscaling = 0;
 							break;
 						case OPTION_FBA_VSYNC:
 							options.vsync ^= 1;
@@ -2206,6 +2206,7 @@ movedown:
 void GuiRun()
 {
 	// fill data with data
+	load_rom_sort();
 	gui_sort_romlist();
 	use_language_pack = gui_load_language_pack();
 	set_language();

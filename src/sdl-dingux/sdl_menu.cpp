@@ -251,7 +251,7 @@ MENUITEM gui_MainMenuItems[] = {
 	{(char *)"Help", NULL, 0, NULL, &gui_help},
 	{(char *)"Reset", NULL, 0, NULL, &gui_reset},
 	{(char *)"Exit", NULL, 0, NULL, &call_exit},
-	{(char *)"Cheat", NULL, 0, NULL, &gui_cheat},//cjs
+	{(char *)"Cheat(unstable)", NULL, 0, NULL, &gui_cheat},//cjs
 	{NULL, NULL, 0, NULL, NULL}
 };
 
@@ -484,7 +484,7 @@ static void gui_help()
 	DrawString("D-PAD        Movement", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
 	DrawString("SELECT       Coin", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
 	DrawString("START        Start1", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
-	DrawString("SELECT+START Start2", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
+	//DrawString("SELECT+START Start2", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);//not use SELECT+START to Start2
 	DrawString("A,B,X,Y,L,R  Fire buttons", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
 #ifdef GCW0_BTN_LAYOUT
 #define SHOW_FPS_LR		"L+R+X        Show/hide fps"
@@ -494,6 +494,8 @@ static void gui_help()
 	DrawString(SHOW_FPS_LR, COLOR_INACTIVE_ITEM, COLOR_BG, x, (++row)++ * row_size);
 	DrawString("L+R+A        Quick load", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
 	DrawString("L+R+B        Quick save", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
+    DrawString("L3           Quick load", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
+    DrawString("R3           Quick save", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
 	DrawString("L+R+SELECT   Service menu", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
 	DrawString("L+R+START    FBA SDL menu", COLOR_INACTIVE_ITEM, COLOR_BG, x, row++ * row_size);
 

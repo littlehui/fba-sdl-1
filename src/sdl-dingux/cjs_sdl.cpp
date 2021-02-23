@@ -132,7 +132,22 @@ int ec_Settings()
 		offset_start = 0;
 		start_now = index*start_w+start_y;
 		all_ec_nums = get_ec_infos();
-		
+		if (all_ec_nums == -2) {
+		    //exit
+            DrawText3("无金手指文件,按B退出", 0, start_now);
+            DrawText3(ecname, 0, start_now+start_w);
+            SDL_Delay(16);
+            SFC_Flip();
+            int cheatFileDone;
+            while (!cheatFileDone) {
+                readkey();
+                if (parsekey(SDL_INPUT_B))
+                    cheatFileDone = 1;
+            }
+            if (cheatFileDone) {
+                return 0;
+            }
+		}
 	}
 	
 	CheatInfo* pCurrentCheat = pCheatInfo;
